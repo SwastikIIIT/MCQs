@@ -4,12 +4,12 @@ import Maincard from './components/Maincard';
 import { decodeHTML } from './utils/quizUtils';
 
 export default function QuizApp() {
-  const [questions, setQuestions] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState({});
-  const [quizCompleted, setQuizCompleted] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [fetchingNewQuestions, setFetchingNewQuestions] = useState(false);
+  const [questions,setQuestions] = useState([]);
+  const [currentQuestionIndex,setCurrentQuestionIndex]=useState(0);
+  const [userAnswers,setUserAnswers]=useState({});
+  const [quizCompleted,setQuizCompleted]=useState(false);
+  const [loading,setLoading]=useState(true);
+  const [fetchingNewQuestions,setFetchingNewQuestions]=useState(false);
 
   const fetchQuestions=async()=>{
     try {
@@ -67,7 +67,7 @@ export default function QuizApp() {
     fetchQuestions();
   };
 
-  const calculateScore = () => {
+  const calculateScore=()=>{
     let score=0;
     questions.forEach((question,index) => {
       if (userAnswers[index]===question.correct_answer) {
@@ -107,7 +107,7 @@ export default function QuizApp() {
   }
 
   const currentQuestion=questions[currentQuestionIndex];
-  const progressPercentage=((currentQuestionIndex + 1) / questions.length) * 100;
+  const progressPercentage=((currentQuestionIndex+1)/questions.length) * 100;
 
   if (quizCompleted && !fetchingNewQuestions) {
     const score = calculateScore();
@@ -140,7 +140,7 @@ export default function QuizApp() {
             <div className="flex justify-between items-center mb-2">
               <span className="text-lg font-medium">Your Score:</span>
               <span className="text-2xl font-bold">
-                {score} / {questions.length}
+                {score}/{questions.length}
               </span>
             </div>
             <div className="w-full bg-gray-300 rounded-full h-4">
@@ -161,7 +161,7 @@ export default function QuizApp() {
                   <p className="text-sm mt-1">
                     <span className="font-medium">Your answer:</span>{" "}
                     <span className={userAnswers[idx] === q.correct_answer ? "text-green-600" : "text-red-600"}>
-                      {userAnswers[idx] || "Not answered"}
+                      {userAnswers[idx]}
                     </span>
                   </p>
                   {userAnswers[idx] !== q.correct_answer && (

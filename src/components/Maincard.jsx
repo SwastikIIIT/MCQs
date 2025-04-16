@@ -13,6 +13,7 @@ const Maincard = ({
   nextQuestion
 }) => {
 
+    console.log("Answers",userAnswers);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
@@ -34,7 +35,7 @@ const Maincard = ({
             {currentQuestion.category}
           </span>
           <span className="ml-2 bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">
-            {currentQuestion.difficulty.charAt(0).toUpperCase() + currentQuestion.difficulty.slice(1)}
+            {currentQuestion.difficulty.charAt(0).toUpperCase()+currentQuestion.difficulty.slice(1)}
           </span>
         </div>
 
@@ -43,14 +44,9 @@ const Maincard = ({
        
         <div className="mb-6">
           <ul className="space-y-3">
-            {currentQuestion.answers.map((answer, index) => {
-              
-              const isSelected = userAnswers[currentQuestionIndex] === answer;
-              
-            
+            {currentQuestion.answers.map((answer,index)=>{
+              const isSelected=userAnswers[currentQuestionIndex]===answer;
               const baseClass = "flex items-center p-4 rounded-lg cursor-pointer transition-all duration-200";
-              
-             
               const styleClass = isSelected 
                 ? "bg-blue-100 border-2 border-blue-500 text-blue-700" 
                 : "bg-white border-2 border-gray-200 hover:bg-gray-50";
@@ -58,7 +54,7 @@ const Maincard = ({
               return (
                 <li 
                   key={index}
-                  onClick={() => handleAnswerSelection(answer)}
+                  onClick={()=>handleAnswerSelection(answer)}
                   className={`${baseClass} ${styleClass}`}
                 >
                   
