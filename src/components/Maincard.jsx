@@ -80,7 +80,7 @@ const Maincard = ({
           <button
             onClick={prevQuestion}
             disabled={currentQuestionIndex === 0}
-            className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium ${
+            className={`cursor-pointer flex items-center gap-1 px-4 py-2 rounded-lg font-medium ${
               currentQuestionIndex === 0
                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -92,7 +92,7 @@ const Maincard = ({
 
           <button
             onClick={nextQuestion}
-            className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium ${
+            className={`cursor-pointer flex items-center gap-1 px-4 py-2 rounded-lg font-medium ${
               !userAnswers[currentQuestionIndex]
                 ? 'bg-gray-200 text-gray-500'
                 : 'bg-blue-500 text-white hover:bg-blue-600'
