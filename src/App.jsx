@@ -188,7 +188,6 @@ export default function QuizApp() {
 
   return (
     <Maincard 
-    userAnswers={userAnswers}
        questions={questions}
        prevQuestion={prevQuestion}
        nextQuestion={nextQuestion}
