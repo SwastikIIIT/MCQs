@@ -1,11 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { ChevronRight, ChevronLeft, Check, Circle } from 'lucide-react';
+import { decodeHTML } from '../utils/quizUtils';
 
-const Maincard = ({questions,currentQuestionIndex,currentQuestion,handleAnswerSelection,prevQuestion,userAnswers,getAnswerButtonClass,progressPercentage,quizCompleted,nextQuestion
+const Maincard = ({
+  questions,
+  currentQuestionIndex,
+  currentQuestion,
+  handleAnswerSelection,
+  prevQuestion,
+  userAnswers,
+  progressPercentage,
+  nextQuestion
 }) => {
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
-        {/* Progress bar */}
         <div className="mb-6">
           <div className="flex justify-between text-sm text-gray-600 mb-1">
             <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
@@ -19,7 +29,6 @@ const Maincard = ({questions,currentQuestionIndex,currentQuestion,handleAnswerSe
           </div>
         </div>
 
-        {/* Category badge */}
         <div className="mb-4">
           <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
             {currentQuestion.category}
@@ -29,24 +38,48 @@ const Maincard = ({questions,currentQuestionIndex,currentQuestion,handleAnswerSe
           </span>
         </div>
 
-        {/* Question */}
-        <h2 className="text-xl font-bold mb-6">{currentQuestion.question}</h2>
+        <h2 className="text-xl font-bold mb-6">{decodeHTML(currentQuestion.question)}</h2>
 
-        {/* Answer options */}
-        <div className="space-y-2 mb-6">
-          {currentQuestion.answers.map((answer, index) => (
-            <button
-              key={index}
-              onClick={()=>handleAnswerSelection(answer)}
-              disabled={quizCompleted}
-              className={getAnswerButtonClass(answer)}
-            >
-              {answer}
-            </button>
-          ))}
+       
+        <div className="mb-6">
+          <ul className="space-y-3">
+            {currentQuestion.answers.map((answer, index) => {
+              
+              const isSelected = userAnswers[currentQuestionIndex] === answer;
+              
+            
+              const baseClass = "flex items-center p-4 rounded-lg cursor-pointer transition-all duration-200";
+              
+             
+              const styleClass = isSelected 
+                ? "bg-blue-100 border-2 border-blue-500 text-blue-700" 
+                : "bg-white border-2 border-gray-200 hover:bg-gray-50";
+              
+              return (
+                <li 
+                  key={index}
+                  onClick={() => handleAnswerSelection(answer)}
+                  className={`${baseClass} ${styleClass}`}
+                >
+                  
+                  <div className="mr-3">
+                    {isSelected ? (
+                      <div className="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center">
+                        <Check size={16} className="text-white" />
+                      </div>
+                    ) : (
+                      <Circle size={24} className="text-gray-300" />
+                    )}
+                  </div>
+
+                  <span className="font-medium">{decodeHTML(answer)}</span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        {/* Navigation buttons */}
+        
         <div className="flex justify-between mt-6">
           <button
             onClick={prevQuestion}
@@ -75,7 +108,7 @@ const Maincard = ({questions,currentQuestionIndex,currentQuestion,handleAnswerSe
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Maincard
+export default Maincard;

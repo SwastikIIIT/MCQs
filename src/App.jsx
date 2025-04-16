@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Award, Loader2, RefreshCw } from 'lucide-react';
 import Maincard from './components/Maincard';
+import { decodeHTML } from './utils/quizUtils';
 
 export default function QuizApp() {
   const [questions, setQuestions] = useState([]);
@@ -23,7 +24,7 @@ export default function QuizApp() {
       
       const processedQuestions=data.results.map((q) => {
         const answers=[...q.incorrect_answers,q.correct_answer].sort(()=>Math.random()-0.5);
-        return {...q,answers,question:q.question};
+        return {...q,answers,question:decodeHTML(q.question)};
       });
       
       setQuestions(processedQuestions);
@@ -76,22 +77,6 @@ export default function QuizApp() {
     return score;
   };
 
-  const getAnswerButtonClass=(answer) => {
-    const baseClass = "p-4 rounded-lg mb-2 font-medium transition-all duration-200 text-left";
-    
-    if (quizCompleted) {
-      if (answer === questions[currentQuestionIndex].correct_answer) {
-        return `${baseClass} bg-green-100 border-2 border-green-500 text-green-700`;
-      } else if (userAnswers[currentQuestionIndex] === answer) {
-        return `${baseClass} bg-red-100 border-2 border-red-500 text-red-700`;
-      }
-      return `${baseClass} bg-white border-2 border-gray-200`;
-    }
-    
-    return userAnswers[currentQuestionIndex] === answer
-      ? `${baseClass} bg-blue-100 border-2 border-blue-500 text-blue-700`
-      : `${baseClass} bg-white border-2 border-gray-200 hover:bg-gray-100`;
-  };
 
   if (loading) {
     return (
@@ -203,14 +188,13 @@ export default function QuizApp() {
 
   return (
     <Maincard 
+    userAnswers={userAnswers}
        questions={questions}
        prevQuestion={prevQuestion}
        nextQuestion={nextQuestion}
        currentQuestion={currentQuestion}
        currentQuestionIndex={currentQuestionIndex}
        handleAnswerSelection={handleAnswerSelection}
-       getAnswerButtonClass={getAnswerButtonClass}
-       quizCompleted={quizCompleted}
        progressPercentage={progressPercentage}
     />
   );
